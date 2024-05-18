@@ -16,17 +16,19 @@ struct ContentView: View {
 
     // MARK: - FUNCTION
 
-    func resetImageState(){
+    func resetImageState() {
         return withAnimation(.spring) {
             imageScale = 1
             imageOffset = .zero
         }
     }
+
     // MARK: - CONTENT
 
     var body: some View {
         NavigationView {
             ZStack {
+                Color.clear
                 Image("magazine-front-cover")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -71,6 +73,15 @@ struct ContentView: View {
                     isAnimating = true
                 }
             })
+
+            // MARK: - Info panel
+
+            .overlay(
+                InfoPanelView(scale: imageScale, offset: imageOffset)
+                    .padding(.horizontal)
+                    .padding(.top, 30),
+                alignment: .top
+            )
         } //: NAVIGATION
         .navigationViewStyle(.stack)
     }
